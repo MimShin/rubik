@@ -7,7 +7,7 @@ import (
 func (cube *Cube) Key1() string {
 	key := ""
 	for i := 0; i < 6; i++ {
-		f := cube.faces(i)
+		f := cube.faces[i]
 		for r := 0; r < size; r++ {
 			for c := 0; c < size; c++ {
 				key += string(f[r][c])
@@ -22,7 +22,7 @@ func (cube *Cube) Key2() string {
 
 	var kr, kg, kb, kw, ky, ko int
 	for i := 0; i < 6; i++ {
-		f := cube.faces(i)
+		f := cube.faces[i]
 		k := 0
 		for r := 0; r < size; r++ {
 			for c := 0; c < size; c++ {
@@ -68,7 +68,7 @@ func (cube *Cube) Key() string {
 
 	var kr, kg, kb, kw, ky, ko int
 	for i := 0; i < 6; i++ {
-		f := cube.faces(i)
+		f := cube.faces[i]
 		k := 0
 		for r := 0; r < size; r++ {
 			for c := 0; c < size; c++ {

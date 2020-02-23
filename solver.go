@@ -37,7 +37,7 @@ func solve(cube Cube, movesStr string, lastLastM, lastM, max int) {
 		return
 	}
 
-	if max <= 0 {
+	if max == 0 {
 		return
 	}
 

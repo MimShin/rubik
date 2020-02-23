@@ -25,16 +25,16 @@ var Moves = [...]int{
 func (cube *Cube) RowTurnCW(r int) string {
 	notation := fmt.Sprintf("%d%s  ", r+1, left)
 	for i := 0; i < size; i++ {
-		cube.left[r][i], cube.front[r][i], cube.right[r][i], cube.back[r][i] =
-			cube.front[r][i], cube.right[r][i], cube.back[r][i], cube.left[r][i]
+		cube.faces[2][r][i], cube.faces[4][r][i], cube.faces[3][r][i], cube.faces[5][r][i] =
+			cube.faces[4][r][i], cube.faces[3][r][i], cube.faces[5][r][i], cube.faces[2][r][i]
 	}
 
 	if r == 0 {
-		cube.top.turnCW()
+		cube.faces[0].turnCW()
 	}
 
 	if r == size-1 {
-		cube.bottom.turnCCW()
+		cube.faces[1].turnCCW()
 	}
 
 	return notation
@@ -43,16 +43,16 @@ func (cube *Cube) RowTurnCW(r int) string {
 func (cube *Cube) RowTurnCCW(r int) string {
 	notation := fmt.Sprintf("%d%s  ", r+1, right)
 	for i := 0; i < size; i++ {
-		cube.right[r][i], cube.front[r][i], cube.left[r][i], cube.back[r][i] =
-			cube.front[r][i], cube.left[r][i], cube.back[r][i], cube.right[r][i]
+		cube.faces[3][r][i], cube.faces[4][r][i], cube.faces[2][r][i], cube.faces[5][r][i] =
+			cube.faces[4][r][i], cube.faces[2][r][i], cube.faces[5][r][i], cube.faces[3][r][i]
 	}
 
 	if r == 0 {
-		cube.top.turnCCW()
+		cube.faces[0].turnCCW()
 	}
 
 	if r == size-1 {
-		cube.bottom.turnCW()
+		cube.faces[1].turnCW()
 	}
 
 	return notation
@@ -61,16 +61,16 @@ func (cube *Cube) RowTurnCCW(r int) string {
 func (cube *Cube) ColTurnUp(c int) string {
 	notation := fmt.Sprintf("%d%s  ", c+1, up)
 	for i := 0; i < size; i++ {
-		cube.top[i][c], cube.front[i][c], cube.bottom[i][c], cube.back[size-1-i][size-1-c] =
-			cube.front[i][c], cube.bottom[i][c], cube.back[size-i-1][size-c-1], cube.top[i][c]
+		cube.faces[0][i][c], cube.faces[4][i][c], cube.faces[1][i][c], cube.faces[5][size-1-i][size-1-c] =
+			cube.faces[4][i][c], cube.faces[1][i][c], cube.faces[5][size-i-1][size-c-1], cube.faces[0][i][c]
 	}
 
 	if c == 0 {
-		cube.left.turnCCW()
+		cube.faces[2].turnCCW()
 	}
 
 	if c == size-1 {
-		cube.right.turnCW()
+		cube.faces[3].turnCW()
 	}
 
 	return notation
@@ -79,16 +79,16 @@ func (cube *Cube) ColTurnUp(c int) string {
 func (cube *Cube) ColTurnDn(c int) string {
 	notation := fmt.Sprintf("%d%s  ", c+1, down)
 	for i := 0; i < size; i++ {
-		cube.front[i][c], cube.bottom[i][c], cube.back[size-i-1][size-c-1], cube.top[i][c] =
-			cube.top[i][c], cube.front[i][c], cube.bottom[i][c], cube.back[size-1-i][size-1-c]
+		cube.faces[4][i][c], cube.faces[1][i][c], cube.faces[5][size-i-1][size-c-1], cube.faces[0][i][c] =
+			cube.faces[0][i][c], cube.faces[4][i][c], cube.faces[1][i][c], cube.faces[5][size-1-i][size-1-c]
 	}
 
 	if c == 0 {
-		cube.left.turnCW()
+		cube.faces[2].turnCW()
 	}
 
 	if c == size-1 {
-		cube.right.turnCCW()
+		cube.faces[3].turnCCW()
 	}
 
 	return notation
@@ -97,16 +97,16 @@ func (cube *Cube) ColTurnDn(c int) string {
 func (cube *Cube) FaceTurnCW(f int) string {
 	notation := fmt.Sprintf("%d%s  ", f+1, cw)
 	for i := 0; i < size; i++ {
-		cube.left[i][size-1-f], cube.top[size-1-f][size-1-i], cube.right[size-1-i][f], cube.bottom[f][i] =
-			cube.bottom[f][i], cube.left[i][size-1-f], cube.top[size-1-f][size-1-i], cube.right[size-1-i][f]
+		cube.faces[2][i][size-1-f], cube.faces[0][size-1-f][size-1-i], cube.faces[3][size-1-i][f], cube.faces[1][f][i] =
+			cube.faces[1][f][i], cube.faces[2][i][size-1-f], cube.faces[0][size-1-f][size-1-i], cube.faces[3][size-1-i][f]
 	}
 
 	if f == 0 {
-		cube.front.turnCW()
+		cube.faces[4].turnCW()
 	}
 
 	if f == size-1 {
-		cube.back.turnCCW()
+		cube.faces[5].turnCCW()
 	}
 
 	return notation
@@ -115,16 +115,16 @@ func (cube *Cube) FaceTurnCW(f int) string {
 func (cube *Cube) FaceTurnCCW(f int) string {
 	notation := fmt.Sprintf("%d%s  ", f+1, ccw)
 	for i := 0; i < size; i++ {
-		cube.bottom[f][i], cube.left[i][size-1-f], cube.top[size-1-f][size-1-i], cube.right[size-1-i][f] =
-			cube.left[i][size-1-f], cube.top[size-1-f][size-1-i], cube.right[size-1-i][f], cube.bottom[f][i]
+		cube.faces[1][f][i], cube.faces[2][i][size-1-f], cube.faces[0][size-1-f][size-1-i], cube.faces[3][size-1-i][f] =
+			cube.faces[2][i][size-1-f], cube.faces[0][size-1-f][size-1-i], cube.faces[3][size-1-i][f], cube.faces[1][f][i]
 	}
 
 	if f == 0 {
-		cube.front.turnCCW()
+		cube.faces[4].turnCCW()
 	}
 
 	if f == size-1 {
-		cube.back.turnCW()
+		cube.faces[5].turnCW()
 	}
 
 	return notation
@@ -168,20 +168,6 @@ func (cube *Cube) MoveX(bitmap int) string {
 		return cube.FaceTurnCCW(i)
 	}
 	return "undefined move!"
-}
-
-func IsReverse(move1, move2 string) bool {
-
-	if move1[0] != move2[0] {
-		return false
-	}
-
-	d1, d2 := move1[1:1], move2[1:1]
-	if d1 == left && d2 == right || d1 == up && d2 == down || d1 == cw && d2 == ccw {
-		return true
-	}
-
-	return false
 }
 
 func (cube *Cube) RandomMove() string {

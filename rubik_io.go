@@ -34,19 +34,24 @@ func (cube *Cube) Fill(str string) {
 		for r := 0; r < size; r++ {
 			for c := 0; c < size; c++ {
 				// fmt.Println(i, r, c, i*size*size+r*size+c)
-				cube.faces(i)[r][c] = str[i*size*size+r*size+c]
+				cube.faces[i][r][c] = str[i*size*size+r*size+c]
 			}
 		}
 	}
 }
 
 func (cube *Cube) String() string {
-	s := ""
 
+	top, bottom, left, right, front, back :=
+		cube.FaceByName("top"), cube.FaceByName("bottom"),
+		cube.FaceByName("left"), cube.FaceByName("right"),
+		cube.FaceByName("front"), cube.FaceByName("back")
+
+	s := ""
 	for r := 0; r < size; r++ {
 		s += "\n " + strings.Repeat(" ", size*2)
 		for c := 0; c < size; c++ {
-			s += " " + string(cube.top[r][c])
+			s += " " + string(top[r][c])
 		}
 	}
 
@@ -54,19 +59,19 @@ func (cube *Cube) String() string {
 	for r := 0; r < size; r++ {
 		s += "\n"
 		for c := 0; c < size; c++ {
-			s += " " + string(cube.left[r][c])
+			s += " " + string(left[r][c])
 		}
 		s += " "
 		for c := 0; c < size; c++ {
-			s += " " + string(cube.front[r][c])
+			s += " " + string(front[r][c])
 		}
 		s += " "
 		for c := 0; c < size; c++ {
-			s += " " + string(cube.right[r][c])
+			s += " " + string(right[r][c])
 		}
 		s += " "
 		for c := 0; c < size; c++ {
-			s += " " + string(cube.back[r][c])
+			s += " " + string(back[r][c])
 		}
 	}
 
@@ -74,7 +79,7 @@ func (cube *Cube) String() string {
 	for r := 0; r < size; r++ {
 		s += "\n " + strings.Repeat(" ", size*2)
 		for c := 0; c < size; c++ {
-			s += " " + string(cube.bottom[r][c])
+			s += " " + string(bottom[r][c])
 		}
 	}
 
@@ -110,12 +115,16 @@ func colorString(c byte) string {
 }
 
 func (cube *Cube) ColorString() string {
-	s := ""
+	top, bottom, left, right, front, back :=
+		cube.FaceByName("top"), cube.FaceByName("bottom"),
+		cube.FaceByName("left"), cube.FaceByName("right"),
+		cube.FaceByName("front"), cube.FaceByName("back")
 
+	s := ""
 	for r := 0; r < size; r++ {
 		s += "\n " + strings.Repeat(" ", size*2)
 		for c := 0; c < size; c++ {
-			s += colorString(cube.top[r][c])
+			s += colorString(top[r][c])
 		}
 	}
 
@@ -123,19 +132,19 @@ func (cube *Cube) ColorString() string {
 	for r := 0; r < size; r++ {
 		s += "\n"
 		for c := 0; c < size; c++ {
-			s += colorString(cube.left[r][c])
+			s += colorString(left[r][c])
 		}
 		s += " "
 		for c := 0; c < size; c++ {
-			s += colorString(cube.front[r][c])
+			s += colorString(front[r][c])
 		}
 		s += " "
 		for c := 0; c < size; c++ {
-			s += colorString(cube.right[r][c])
+			s += colorString(right[r][c])
 		}
 		s += " "
 		for c := 0; c < size; c++ {
-			s += colorString(cube.back[r][c])
+			s += colorString(back[r][c])
 		}
 	}
 
@@ -143,7 +152,7 @@ func (cube *Cube) ColorString() string {
 	for r := 0; r < size; r++ {
 		s += "\n " + strings.Repeat(" ", size*2)
 		for c := 0; c < size; c++ {
-			s += colorString(cube.bottom[r][c])
+			s += colorString(bottom[r][c])
 		}
 	}
 
